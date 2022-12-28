@@ -1,4 +1,5 @@
 const express = require('express')
+const bcrypt = require('bcrypt-nodejs')
 
 const app = express();
 
@@ -41,6 +42,9 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req,res) => {
     const {email, name, password} = req.body;
+    bcrypt.hash(password, null, null, function(err, hash) {
+        console.log(hash);
+    });
     database.users.push({
         id: '125',
         name: name,
@@ -72,6 +76,9 @@ app.put('/image' , (req, res) => {
     })
     return res.status(404).json("not found") 
 })
+
+
+
 
 app.listen(3000, () => {
     console.log("listening to port 3000");
