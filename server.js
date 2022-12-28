@@ -1,9 +1,11 @@
 const express = require('express')
 const bcrypt = require('bcrypt-nodejs')
+const cors = require('cors')
 
 const app = express();
 
 app.use(express.json())
+app.use(cors())
 
 const database = {
     users: [
@@ -35,7 +37,7 @@ app.post('/signin', (req, res) => {
         req.body.password === database.users[0].password) {
         res.json('signing in')
     } else {
-        res.status(400).json('error logging in');
+        res.status(404).json('error logging in');
     }
     
 })
@@ -49,7 +51,6 @@ app.post('/register', (req,res) => {
         id: '125',
         name: name,
         email: email,
-        password: password,
         entries: 0,
         joined: new Date()
     })
